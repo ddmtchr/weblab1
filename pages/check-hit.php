@@ -35,24 +35,26 @@ function compute($x, $y, $r)
     return false;
 }
 
-function prepare_response($data_array) {
-    $response_string = "";
-    foreach ($data_array as $arg) {
-        $response_string .= "$arg&";
-    }
-    return $response_string;
+function prepare_response($res, $x, $y, $r, $exec_time, $current_time) {
+    return [
+        "result" => $res,
+        "x" => $x,
+        "y" => $y,
+        "r" => $r,
+        "exec_time" => $exec_time,
+        "current_time" => $current_time];
 }
 
 $start_time = microtime(true);
 
-$response = [];
+$result = "";
 if (check_args_set()) {
     $x = htmlspecialchars($_GET["x_input"]);
     $y = htmlspecialchars($_GET["y_input"]);
     $r = htmlspecialchars($_GET["r_input"]);
     if (validate($x, $y, $r)) {
-        if (compute($x, $y, $r)) $response[] = "Hit";
-        else $response[] = "Miss";
+        if (compute($x, $y, $r)) $result = "Hit";
+        else $result = "Miss";
     } else {
         echo "Invalid args\n";
     }
@@ -64,6 +66,4 @@ date_default_timezone_set("Europe/Moscow");
 $exec_time = round((microtime(true) - $start_time) * (10 ** 6), 2)."µs";
 $current_time = date('Y-m-d H:i:s');
 
-array_push($response, $x, $y, $r, $exec_time, $current_time);
-
-echo prepare_response($response);
+echo json_encode(prepare_response($result, $x, $y, $r, $exec_time, $current_time));
