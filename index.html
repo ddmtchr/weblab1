@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weblab #1</title>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+</head>
+<body>
+<header>
+    <h2>Романенко Михаил Романович P3211 Вариант 2106</h2>
+</header>
+<div>
+    <img src="resources/areas.png" width="400" alt="Кто-то спёр график"/>
+    <img src="resources/ipaddress.jpg" width="400" alt="Кто-то спёр график"/>
+</div>
+<div>
+    <form action="pages/check-hit.php" method="GET" id="mainForm">
+        <div>
+            <label for="x_input">Выберите X:</label>
+            <select id="x_input" name="x_input" required>
+                <option value="" selected></option>
+                <option>-4</option>
+                <option>-3</option>
+                <option>-2</option>
+                <option>-1</option>
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+        </div>
+        <div>
+            <label for="y_input">Введите Y:</label>
+            <input id="y_input" type="text" name="y_input" required/>
+        </div>
+
+        <div>
+            Выберите R:<br/>
+            <input type="checkbox" id="1" value="1" name="r_input"/>
+            <label for="1">1</label><br/>
+
+            <input type="checkbox" id="1.5" value="1.5" name="r_input"/>
+            <label for="1.5">1.5</label><br/>
+
+            <input type="checkbox" id="2" value="2" name="r_input"/>
+            <label for="2">2</label><br/>
+
+            <input type="checkbox" id="2.5" value="2.5" name="r_input"/>
+            <label for="2.5">2.5</label><br/>
+
+            <input type="checkbox" id="3" value="3" name="r_input"/>
+            <label for="3">3</label><br/>
+        </div>
+
+
+        <input type="submit" value="Submit">
+
+    </form>
+
+</div>
+<div>
+    <table id="resultTable">
+        <tr>
+            <th>Result</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>R</th>
+            <th>Exec time</th>
+            <th>Exec at</th>
+        </tr>
+    </table>
+
+</div>
+<script type="text/javascript" src="assets/js/script.js"></script>
+</body>
+</html>
