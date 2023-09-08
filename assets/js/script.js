@@ -1,7 +1,7 @@
-let table = document.querySelector('#resultTable')
+let tableBody = document.querySelector('#resultTable tbody')
 
 render()
-document.getElementById('mainForm').addEventListener('submit', async function (event) {
+document.querySelector('#mainForm').addEventListener('submit', async function (event) {
     event.preventDefault()
 
     let yField = document.querySelector('#y_input')
@@ -18,7 +18,7 @@ document.getElementById('mainForm').addEventListener('submit', async function (e
         const responseDataJSON = await response.text() // JSON
         const responseObject = JSON.parse(responseDataJSON)
 
-        const previousResultsJSON = localStorage.getItem('previousResults') === null ? JSON.stringify([]) : localStorage.getItem('previousResults')
+        const previousResultsJSON = getFromLocalStorage('previousResults')
         const previousResults = JSON.parse(previousResultsJSON)
 
         previousResults.push(responseObject)
@@ -26,20 +26,6 @@ document.getElementById('mainForm').addEventListener('submit', async function (e
         localStorage.setItem('previousResults', JSON.stringify(previousResults))
 
         render()
-
-        // const newRow = table.insertRow()
-        // const resultCell = newRow.insertCell(0)
-        // const xCell = newRow.insertCell(1)
-        // const yCell = newRow.insertCell(2)
-        // const rCell = newRow.insertCell(3)
-        // const execTimeCell = newRow.insertCell(4)
-        // const currentTimeCell = newRow.insertCell(5)
-        // resultCell.innerHTML = responseValues['result']
-        // xCell.innerHTML = responseValues['x']
-        // yCell.innerHTML = responseValues['y']
-        // rCell.innerHTML = responseValues['r']
-        // execTimeCell.innerHTML = responseValues['exec_time']
-        // currentTimeCell.innerHTML = responseValues['current_time']
 
         yField.style.backgroundColor = 'white'
 
@@ -49,18 +35,23 @@ document.getElementById('mainForm').addEventListener('submit', async function (e
     }
 })
 
+document.querySelector('#clearButton').onclick = function () {
+    localStorage.clear()
+    render()
+}
+
 function render() {
 
-    const resultsJSON = localStorage.getItem('previousResults')
+    const resultsJSON = getFromLocalStorage('previousResults')
     const resultsObjects = JSON.parse(resultsJSON)
-    console.log(resultsObjects)
-    console.log(resultsObjects.length)
+    // console.log(resultsObjects)
+    // console.log(resultsObjects.length)
 
-    table.innerHTML = ''
+    tableBody.innerHTML = ''
 
     for (const result of resultsObjects) {
 
-        const newRow = table.insertRow()
+        const newRow = tableBody.insertRow()
         const resultCell = newRow.insertCell(0)
         const xCell = newRow.insertCell(1)
         const yCell = newRow.insertCell(2)
@@ -80,4 +71,8 @@ function render() {
 
 function isNumeric(str) {
     return !isNaN(parseFloat(str)) && isFinite(str)
+}
+
+function getFromLocalStorage(key) {
+    return localStorage.getItem(key) === null ? JSON.stringify([]) : localStorage.getItem(key)
 }
