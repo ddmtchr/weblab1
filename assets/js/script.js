@@ -1,4 +1,4 @@
-let tableBody = document.querySelector('#resultTable tbody')
+const tableBody = document.querySelector('#resultTable tbody')
 
 render()
 document.querySelector('#mainForm').addEventListener('submit', async function (event) {
@@ -6,7 +6,6 @@ document.querySelector('#mainForm').addEventListener('submit', async function (e
 
     let yField = document.querySelector('#y_input')
     let y = yField.value
-    debugger
     let checkboxGroup = document.querySelectorAll('div.checkbox-group.required .chb:checked')
     if (isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5 && checkboxGroup.length === 1) {
         const requestData = new FormData(this)
@@ -50,6 +49,9 @@ function render() {
 
     tableBody.innerHTML = ''
 
+    // drawShapes(200)
+    // drawAxis()
+
     for (const result of resultsObjects) {
 
         const newRow = tableBody.insertRow()
@@ -65,6 +67,7 @@ function render() {
         rCell.innerHTML = result['r']
         execTimeCell.innerHTML = result['exec_time']
         currentTimeCell.innerHTML = result['current_time']
+        redrawPoint(result['x'] * 200 / result['r'], result['y'] * 200 / result['r'], 'black')
     }
 
 
@@ -77,3 +80,4 @@ function isNumeric(str) {
 function getFromLocalStorage(key) {
     return localStorage.getItem(key) === null ? JSON.stringify([]) : localStorage.getItem(key)
 }
+
