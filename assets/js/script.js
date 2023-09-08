@@ -6,8 +6,9 @@ document.querySelector('#mainForm').addEventListener('submit', async function (e
 
     let yField = document.querySelector('#y_input')
     let y = yField.value
-
-    if (isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5) {
+    debugger
+    let checkboxGroup = document.querySelectorAll('div.checkbox-group.required .chb:checked')
+    if (isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5 && checkboxGroup.length === 1) {
         const requestData = new FormData(this)
 
         const response = await fetch('../../pages/check-hit.php?' + new URLSearchParams(requestData))
