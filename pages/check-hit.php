@@ -66,4 +66,6 @@ date_default_timezone_set("Europe/Moscow");
 $exec_time = round((microtime(true) - $start_time) * (10 ** 6), 2)."µs";
 $current_time = date('Y-m-d H:i:s');
 
-echo json_encode(prepare_response($result, $x, $y, $r, $exec_time, $current_time));
+$json_results = json_encode(prepare_response($result, $x, $y, $r, $exec_time, $current_time), JSON_UNESCAPED_UNICODE);
+
+echo $json_results;
