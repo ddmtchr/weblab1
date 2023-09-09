@@ -2,16 +2,11 @@ const canvas = document.querySelector('canvas')
 const context = canvas.getContext('2d')
 const halfWidth = canvas.width / 2
 const halfHeight = canvas.height / 2
-const rDefault = canvas.width * 0.4;
+const rDefault = canvas.width * 0.4
 const canvasFont = '16px sans-serif'
 
 context.translate(halfWidth, halfHeight)
 context.scale(1, -1)
-
-
-drawShapes(rDefault)
-drawAxis()
-
 
 function drawPoint(x, y, color) {
     context.fillStyle = color
@@ -22,27 +17,31 @@ function drawPoint(x, y, color) {
     context.fill()
 }
 
-function redrawPoint(x, y, color) {
+function redrawGraph() {
     context.clearRect(-halfWidth, -halfHeight, canvas.width, canvas.height)
-    drawShapes(rDefault)
     drawAxis()
+    drawShapes(rDefault)
+}
+
+function redrawPoint(x, y, color) {
+    redrawGraph()
     drawPoint(x, y, color)
 }
 
 function drawShapes(r) {
-    let x1 = r;
-    let y1 = 0;
-    let x2 = 0;
-    let y2 = 0;
-    let x3 = 0;
-    let y3 = r;
-    context.fillStyle = '#9999ff'
+    let x1 = r
+    let y1 = 0
+    let x2 = 0
+    let y2 = 0
+    let x3 = 0
+    let y3 = r
+    context.fillStyle = '#9999ff60'
 
-    context.beginPath(); // Triangle
+    context.beginPath() // Triangle
     context.moveTo(x1, y1)
-    context.lineTo(x2, y2);
-    context.lineTo(x3, y3);
-    context.closePath();
+    context.lineTo(x2, y2)
+    context.lineTo(x3, y3)
+    context.closePath()
     context.fill()
 
     context.beginPath() // Circle
@@ -51,14 +50,16 @@ function drawShapes(r) {
     context.closePath()
     context.fill()
 
-    context.rect(-r, 0, r, -r / 2) // Rectangle
+    context.beginPath() // Rectangle
+    context.rect(-r, 0, r, -r / 2)
+    context.closePath()
     context.fill()
 }
 
 function drawAxis() {
-    context.fillStyle = '#000000c0'
-    context.strokeStyle = '#000000c0'
-    context.font = canvasFont;
+    context.fillStyle = '#000000'
+    context.strokeStyle = '#000000'
+    context.font = canvasFont
 
     drawHorizontalAxis()
     drawVerticalAxis()
@@ -83,7 +84,8 @@ function drawVerticalAxis() {
     context.stroke()
     context.fill()
     context.scale(1, -1)
-    context.fillText('Y', -17, -halfHeight + 14);
+    context.textAlign = 'left'
+    context.fillText('Y', -17, -halfHeight + 14)
     context.scale(1, -1)
 }
 
@@ -97,7 +99,8 @@ function drawHorizontalAxis() {
     context.stroke()
     context.fill()
     context.scale(1, -1)
-    context.fillText('X', halfWidth - 12, 20);
+    context.textAlign = 'left'
+    context.fillText('X', halfWidth - 12, 20)
     context.scale(1, -1)
 }
 
@@ -108,9 +111,8 @@ function drawVerticalStroke(x, y, text) {
     context.stroke()
     context.scale(1, -1)
     context.textAlign = 'center'
-    context.fillText(text, x, y + 20);
+    context.fillText(text, x, y + 20)
     context.scale(1, -1)
-
 }
 
 function drawHorizontalStroke(x, y, text) {
@@ -120,6 +122,6 @@ function drawHorizontalStroke(x, y, text) {
     context.stroke()
     context.scale(1, -1)
     context.textAlign = 'right'
-    context.fillText(text, x - 5, -y + 5);
+    context.fillText(text, x - 5, -y + 5)
     context.scale(1, -1)
 }
