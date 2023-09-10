@@ -60,6 +60,9 @@ if (check_args_set()) {
     }
 } else {
     $result = "Invalid args";
+    if (!isset($_GET["x_input"])) $x = "-";
+    if (!isset($_GET["y_input"])) $y = "-";
+    if (!isset($_GET["r_input"])) $r = "-";
 }
 
 date_default_timezone_set("Europe/Moscow");

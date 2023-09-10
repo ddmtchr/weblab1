@@ -7,7 +7,6 @@ const clearButton = document.querySelector('#clear-button')
 const themeToggleButton = document.querySelector('#theme-toggle-button')
 const uglyThemeButton = document.querySelector('#ugly-theme-button')
 
-
 render(false)
 mainForm.addEventListener('submit', async function (event) {
     event.preventDefault()
@@ -16,7 +15,7 @@ mainForm.addEventListener('submit', async function (event) {
     let checkboxGroup = document.querySelectorAll('.checkbox-group .chb:checked')
     if (isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5 && checkboxGroup.length === 1) {
         const requestData = new FormData(this)
-        const response = await fetch('../../pages/check-hit.php?' + new URLSearchParams(requestData))
+        const response = await fetch('pages/check-hit.php?' + new URLSearchParams(requestData))
 
         if (!response.ok) {
             console.log(`https://http.cat/${response.status}`)
@@ -24,7 +23,7 @@ mainForm.addEventListener('submit', async function (event) {
         } else {
             const responseDataJSON = await response.text() // JSON
             const responseObject = JSON.parse(responseDataJSON)
-            console.log(responseObject)
+            // console.log(responseObject)
 
             const previousResultsJSON = getFromLocalStorage('previousResults')
             const previousResults = JSON.parse(previousResultsJSON)
@@ -44,7 +43,8 @@ mainForm.addEventListener('submit', async function (event) {
     }
 })
 
-clearButton.addEventListener('click', function () {
+clearButton.addEventListener('click', function (event) {
+    event.preventDefault()
     localStorage.clear()
     render(false)
 })
