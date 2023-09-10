@@ -5,6 +5,5 @@ checkboxes.forEach((chbx) => {
         checkboxes.forEach((cb) => {
             if (cb !== chbx) cb.checked = false
         })
-
     }
 })

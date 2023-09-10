@@ -16,31 +16,26 @@ mainForm.addEventListener('submit', async function (event) {
     let checkboxGroup = document.querySelectorAll('.checkbox-group .chb:checked')
     if (isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5 && checkboxGroup.length === 1) {
         const requestData = new FormData(this)
-
         const response = await fetch('../../pages/check-hit.php?' + new URLSearchParams(requestData))
+
         if (!response.ok) {
             console.log(`https://http.cat/${response.status}`)
             window.location.href = `https://http.cat/${response.status}`
         } else {
-
             const responseDataJSON = await response.text() // JSON
             const responseObject = JSON.parse(responseDataJSON)
             console.log(responseObject)
 
             const previousResultsJSON = getFromLocalStorage('previousResults')
             const previousResults = JSON.parse(previousResultsJSON)
-
             previousResults.push(responseObject)
 
             localStorage.setItem('previousResults', JSON.stringify(previousResults))
 
             render(true)
-
             yError.textContent = ''
             rError.textContent = ''
-
         }
-
     } else if (!(isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5)) {
         yError.textContent = 'Y must be a float between -5 and 5'
     } else if (checkboxGroup.length !== 1) {
@@ -61,18 +56,22 @@ themeToggleButton.addEventListener('click', function () {
     } else {
         themeToggleButton.textContent = "To the dark side"
     }
-    render()
+    render(true)
 })
 
 uglyThemeButton.addEventListener('click', function () {
     document.body.classList.toggle('ugly-theme')
-    render()
+    render(true)
 })
 
 yField.addEventListener('input', function () {
     const input = yField.value
     if (isNumeric(input) || input.trim() === '') {
-        yField.classList.remove('invalid')
+        if (-5 < input && input < 5) {
+            yField.classList.remove('invalid')
+        } else {
+            yField.classList.add('invalid')
+        }
     } else {
         yField.classList.add('invalid')
     }
