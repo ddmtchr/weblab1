@@ -1,15 +1,19 @@
-const tableBody = document.querySelector('#resultTable tbody')
-const yError = document.querySelector('#y_error')
-const rError = document.querySelector('#r_error')
-const yField = document.querySelector('#y_input')
+const tableBody = document.querySelector('#result-table tbody')
+const yError = document.querySelector('#y-error-label')
+const rError = document.querySelector('#r-error-label')
+const yField = document.querySelector('#y-input')
+const mainForm = document.querySelector('#main-form')
+const clearButton = document.querySelector('#clear-button')
+const themeToggleButton = document.querySelector('#theme-toggle-button')
+const uglyThemeButton = document.querySelector('#ugly-theme-button')
 
 
 render(false)
-document.querySelector('#mainForm').addEventListener('submit', async function (event) {
+mainForm.addEventListener('submit', async function (event) {
     event.preventDefault()
 
     let y = yField.value
-    let checkboxGroup = document.querySelectorAll('div.checkbox-group.required .chb:checked')
+    let checkboxGroup = document.querySelectorAll('.checkbox-group .chb:checked')
     if (isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5 && checkboxGroup.length === 1) {
         const requestData = new FormData(this)
 
@@ -21,6 +25,7 @@ document.querySelector('#mainForm').addEventListener('submit', async function (e
 
             const responseDataJSON = await response.text() // JSON
             const responseObject = JSON.parse(responseDataJSON)
+            console.log(responseObject)
 
             const previousResultsJSON = getFromLocalStorage('previousResults')
             const previousResults = JSON.parse(previousResultsJSON)
@@ -31,7 +36,6 @@ document.querySelector('#mainForm').addEventListener('submit', async function (e
 
             render(true)
 
-            yField.style.backgroundColor = 'white'
             yError.textContent = ''
             rError.textContent = ''
 
@@ -39,35 +43,38 @@ document.querySelector('#mainForm').addEventListener('submit', async function (e
 
     } else if (!(isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5)) {
         yError.textContent = 'Y must be a float between -5 and 5'
-        yField.style.backgroundColor = 'red'
     } else if (checkboxGroup.length !== 1) {
         rError.textContent = 'Exactly 1 checkbox should be selected'
 
     }
 })
 
-document.querySelector('#clearButton').addEventListener('click', function () {
+clearButton.addEventListener('click', function () {
     localStorage.clear()
     render(false)
 })
 
-// yField.oninput = function () {
-//     const input = yField.value
-//     if (!isNumeric(input)) {
-//         yField.style.backgroundColor = '#ff8888' // todo change to css
-//     } else {
-//         yField.style.backgroundColor = '#ffffff' // todo change to css
-//     }
-// }
+themeToggleButton.addEventListener('click', function () {
+    document.body.classList.toggle('dark-theme')
+    if (document.body.classList.contains('dark-theme')) {
+        themeToggleButton.textContent = "To the light side"
+    } else {
+        themeToggleButton.textContent = "To the dark side"
+    }
+    render()
+})
+
+uglyThemeButton.addEventListener('click', function () {
+    document.body.classList.toggle('ugly-theme')
+    render()
+})
 
 yField.addEventListener('input', function () {
     const input = yField.value
     if (isNumeric(input) || input.trim() === '') {
-        console.log('Введено число')
-        yField.style.backgroundColor = '#ffffff' // todo change to css
+        yField.classList.remove('invalid')
     } else {
-        console.log('Введена хуйня')
-        yField.style.backgroundColor = '#ff8888' // todo change to css
+        yField.classList.add('invalid')
     }
 })
 
@@ -91,7 +98,8 @@ function render(drawLastPoint) {
         rCell.innerHTML = +result['r']
         execTimeCell.innerHTML = result['exec_time']
         currentTimeCell.innerHTML = result['current_time']
-        if (drawLastPoint) redrawPoint(result['x'] * 200 / result['r'], result['y'] * 200 / result['r'], 'black')
+        if (drawLastPoint) redrawPoint(result['x'] * 200 / result['r'], result['y'] * 200 / result['r'],
+            getComputedStyle(document.body).getPropertyValue('--canvas-point-color'))
     }
     if (!drawLastPoint) redrawGraph()
 

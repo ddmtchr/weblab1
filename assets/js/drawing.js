@@ -35,7 +35,8 @@ function drawShapes(r) {
     let y2 = 0
     let x3 = 0
     let y3 = r
-    context.fillStyle = '#9999ff60'
+    // context.fillStyle = '#9999ff60'
+    context.fillStyle = getComputedStyle(document.body).getPropertyValue('--canvas-shapes-color')
 
     context.beginPath() // Triangle
     context.moveTo(x1, y1)
@@ -57,8 +58,8 @@ function drawShapes(r) {
 }
 
 function drawAxis() {
-    context.fillStyle = '#000000'
-    context.strokeStyle = '#000000'
+    context.fillStyle = getComputedStyle(document.body).getPropertyValue('--canvas-axis-color')
+    context.strokeStyle = getComputedStyle(document.body).getPropertyValue('--canvas-axis-color')
     context.font = canvasFont
 
     drawHorizontalAxis()

@@ -30,7 +30,7 @@ function compute($x, $y, $r)
             if (($x ** 2 + $y ** 2) <= (($r ** 2) / 4)) return true;
         }
     } else {
-        if ($x >= -$r && $y <= 0 && $y >= $r / 2) return true;
+        if ($x >= -$r && $y <= 0 && $y >= -$r / 2) return true;
     }
     return false;
 }
@@ -56,10 +56,10 @@ if (check_args_set()) {
         if (compute($x, $y, $r)) $result = "Hit";
         else $result = "Miss";
     } else {
-        echo "Invalid args\n";
+        $result = "Invalid args";
     }
 } else {
-    echo "Invalid args\n";
+    $result = "Invalid args";
 }
 
 date_default_timezone_set("Europe/Moscow");

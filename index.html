@@ -8,83 +8,117 @@
 </head>
 <body>
 <header>
-    <h2>Романенко Михаил Романович P3211 Вариант 2106</h2>
+    <img src="resources/ipaddress.jpg" width="50" height="50" alt="???"/>
+    <div class="info">
+        <p>Romanenko Mikhail Romanovich</p>
+        <p>Group P3211</p>
+        <p>Variant 2106</p>
+    </div>
 </header>
-<div>
-    <canvas width="500" height="500" >Canvas isn't supported by your browser</canvas>
-    <img src="resources/ipaddress.jpg" width="100" alt="???"/>
-</div>
-<div>
-    <form action="pages/check-hit.php" method="GET" id="mainForm">
-        <div>
-            <label for="x_input">Выберите X:</label>
-            <select id="x_input" name="x_input" required>
-                <option value="" selected></option>
-                <option>-4</option>
-                <option>-3</option>
-                <option>-2</option>
-                <option>-1</option>
-                <option>0</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-            </select>
-        </div>
-        <div>
-            <label for="y_input">Введите Y:</label>
-            <input id="y_input" type="text" name="y_input" required/>
-            <span id="y_error"></span>
-        </div>
+<div id="container">
 
-        <div class="checkbox-group required">
-            Выберите R:<br/>
-            <input type="checkbox" class="chb" id="1" value="1" name="r_input"/>
-            <label for="1">1</label><br/>
+    <div class="canvas-container section-container">
+        <canvas width="500" height="500">Canvas isn't supported by your browser</canvas>
+    </div>
 
-            <input type="checkbox" class="chb" id="1.5" value="1.5" name="r_input"/>
-            <label for="1.5">1.5</label><br/>
+    <div class="form-container section-container">
+        <form action="pages/check-hit.php" method="GET" id="main-form">
+            <div class="x-container">
+                <div class="input-container">
+                    <label for="x-input" class="margin">Select X:</label>
+                    <select id="x-input" class="field" name="x_input" required>
+                        <option value="" selected></option>
+                        <option>-4</option>
+                        <option>-3</option>
+                        <option>-2</option>
+                        <option>-1</option>
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+                <span id="x-error-label" class="error-label"></span>
+            </div>
 
-            <input type="checkbox" class="chb" id="2" value="2" name="r_input"/>
-            <label for="2">2</label><br/>
+            <div class="y-container">
+                <div class="input-container">
+                    <label for="y-input" class="margin">Enter Y:</label>
+                    <input id="y-input" class="field" type="text" name="y_input" required/>
+                </div>
+                <span id="y-error-label" class="error-label"></span>
+            </div>
+            <div class="r-container">
+                <label class="margin">Select R:</label>
+                <div class="checkbox-group margin">
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="chb" id="1" value="1" name="r_input"/>
+                        <label for="1">1</label>
+                    </div>
 
-            <input type="checkbox" class="chb" id="2.5" value="2.5" name="r_input"/>
-            <label for="2.5">2.5</label><br/>
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="chb" id="1.5" value="1.5" name="r_input"/>
+                        <label for="1.5">1.5</label>
+                    </div>
 
-            <input type="checkbox" class="chb" id="3" value="3" name="r_input"/>
-            <label for="3">3</label><br/>
-            <span id="r_error"></span>
-        </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="chb" id="2" value="2" name="r_input"/>
+                        <label for="2">2</label>
+                    </div>
 
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="chb" id="2.5" value="2.5" name="r_input"/>
+                        <label for="2.5">2.5</label>
+                    </div>
 
-        <input type="submit" value="Submit">
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="chb" id="3" value="3" name="r_input"/>
+                        <label for="3">3</label>
+                    </div>
+                </div>
+                <span id="r-error-label" class="error-label margin"></span>
+            </div>
 
-    </form>
+            <div class="buttons-container">
+                <input type="submit" value="Submit">
+                <button id="clear-button">
+                    Clear table
+                </button>
+            </div>
 
-</div>
+        </form>
 
-<div>
-    <button id="clearButton">
-        Clear table
-    </button>
-</div>
-<div>
-    <table id="resultTable">
-        <thead>
+    </div>
+
+    <div class="table-container section-container">
+        <table id="result-table">
+            <thead>
             <tr>
                 <th>Result</th>
                 <th>X</th>
                 <th>Y</th>
                 <th>R</th>
                 <th>Exec time</th>
-                <th>Exec at</th>
+                <th>Executed at</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
 
-        </tbody>
-    </table>
+    </div>
 
+
+
+</div>
+<div class="themes-container">
+    <button id="theme-toggle-button">
+        To the dark side
+    </button>
+    <button id="ugly-theme-button">
+        No please
+    </button>
 </div>
 <script type="text/javascript" src="assets/js/drawing.js"></script>
 <script type="text/javascript" src="assets/js/script.js"></script>
