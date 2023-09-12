@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 :root {
-    --body-font-color: #000;
+    --body-font-color: #111;
     --body-bg-color: #fee1a440;
     --header-color: #aaa;
     --table-inside-border-color: #aaa;
@@ -13,18 +13,19 @@
     --button-bg-color: #5b6cff;
     --button-bg-color-focused: #4b5ce2;
     --button-border: 0;
+    --button-font-color: #111;
     --error-color: #ff9995;
     --section-bg-color: #eee;
     --canvas-axis-color: #000;
     --canvas-shapes-color: #9999ff60;
     --canvas-point-color: #000;
-    --bg-image: none;
-    --bg-image-size: none;
+    --bg-image: url("../../resources/bg-light.jpg");
+    --bg-image-size: cover;
     transition: all .3s ease-in-out;
 }
 
 :root .dark-theme {
-    --body-font-color: #ddd;
+    --body-font-color: #ccc;
     --body-bg-color: #2f3032;
     --header-color: #aaa;
     --table-inside-border-color: #aaa;
@@ -36,12 +37,13 @@
     --button-bg-color: #070038;
     --button-bg-color-focused: #103250;
     --button-border: 1px solid #cdcdcd;
+    --button-font-color: #ccc;
     --error-color: #ff9995;
-    --section-bg-color: #282a46;
+    --section-bg-color: #181a36;
     --canvas-axis-color: #ddd;
     --canvas-shapes-color: #ede68a60;
     --canvas-point-color: #faf0e6;
-    --bg-image: url("../../resources/bg.jpg");
+    --bg-image: url("../../resources/bg-photo.jpg");
     --bg-image-size: cover;
 }
 
@@ -58,6 +60,7 @@
     --button-bg-color: #0f0;
     --button-bg-color-focused: #0ff;
     --button-border: 3px solid #f00;
+    --button-font-color: #f00;
     --error-color: #fff;
     --section-bg-color: #ff0;
     --canvas-axis-color: #f00;
@@ -68,7 +71,7 @@
 }
 
 body {
-    font: 500 14px 'Roboto', sans-serif;
+    font: 400 14px 'Roboto', sans-serif;
     color: var(--body-font-color);
     background-color: var(--body-bg-color);
     background-image: var(--bg-image);
@@ -102,7 +105,7 @@ header p {
 }
 
 table {
-    table-layout: fixed;
+    table-layout: auto;
     width: 100%;
     border-collapse: collapse;
 }
@@ -148,7 +151,7 @@ th {
 
 .section-container {
     background-color: var(--section-bg-color);
-    border-radius: 0.5rem;
+    border-radius: 0.2rem;
     margin: 5px;
     padding: 5px;
     box-shadow: 3px 5px 20px 0 rgba(34, 60, 80, 0.2);
@@ -160,7 +163,8 @@ th {
 }
 
 .table-container {
-    width: 30%;
+    min-width: 30%;
+    width: auto;
     height: fit-content;
 }
 
@@ -253,7 +257,7 @@ input[type="submit"], button {
     border-radius: 5px;
     border: var(--button-border);
     cursor: pointer;
-    color: #fff;
+    color: var(--button-font-color);
     background-color: var(--button-bg-color);
     font-weight: 550;
 }
