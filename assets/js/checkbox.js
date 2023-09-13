@@ -1,4 +1,4 @@
-let checkboxes = document.querySelectorAll('.chb')
+const checkboxes = document.querySelectorAll('.chb')
 checkboxes.forEach((chbx) => {
     chbx.onchange = () => {
         this.checked = !this.checked

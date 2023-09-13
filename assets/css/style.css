@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Ubuntu:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Ubuntu+Mono&family=Ubuntu:wght@500&display=swap');
 
 :root {
+    --body-font: 400 14px 'Ubuntu', 'Roboto', sans-serif;
     --body-font-color: #111;
     --body-bg-color: #fee1a440;
     --header-color: #aaa;
@@ -22,61 +25,65 @@
     --bg-image: url("../../resources/bg-light.jpg");
     --bg-image-size: cover;
     transition: all .3s ease-in-out;
-}
 
-:root .dark-theme {
-    --body-font-color: #ccc;
-    --body-bg-color: #2f3032;
-    --header-color: #aaa;
-    --table-inside-border-color: #aaa;
-    --odd-row-bg-color: #0c242b;
-    --input-bg-color: #0c242b;
-    --input-text-color: #ddd;
-    --input-border-color: #c0c4c9;
-    --input-border-color-focused: #6a77e8;
-    --button-bg-color: #070038;
-    --button-bg-color-focused: #103250;
-    --button-border: 1px solid #cdcdcd;
-    --button-font-color: #ccc;
-    --error-color: #ff9995;
-    --section-bg-color: #181a36;
-    --canvas-axis-color: #ddd;
-    --canvas-shapes-color: #ede68a60;
-    --canvas-point-color: #faf0e6;
-    --bg-image: url("../../resources/bg-photo.jpg");
-    --bg-image-size: cover;
-}
+    .dark-theme {
+        --body-font: 400 14px 'Ubuntu', 'Roboto', sans-serif;
+        --body-font-color: #ccc;
+        --body-bg-color: #2f3032;
+        --header-color: #aaa;
+        --table-inside-border-color: #aaa;
+        --odd-row-bg-color: #0c242b;
+        --input-bg-color: #0c242b;
+        --input-text-color: #ddd;
+        --input-border-color: #c0c4c9;
+        --input-border-color-focused: #6a77e8;
+        --button-bg-color: #070038;
+        --button-bg-color-focused: #103250;
+        --button-border: 1px solid #cdcdcd;
+        --button-font-color: #ccc;
+        --error-color: #ff9995;
+        --section-bg-color: #181a36;
+        --canvas-axis-color: #ddd;
+        --canvas-shapes-color: #87CEEB60;
+        --canvas-point-color: #faf0e6;
+        --bg-image: url("../../resources/bg-photo-crop.jpg");
+        --bg-image-size: cover;
+    }
 
-:root .ugly-theme {
-    --body-font-color: #f00;
-    --body-bg-color: #00f;
-    --header-color: #aaa;
-    --table-inside-border-color: #0f0;
-    --odd-row-bg-color: #00f;
-    --input-bg-color: #0f0;
-    --input-text-color: #00f;
-    --input-border-color: #0ff;
-    --input-border-color-focused: #6a77e8;
-    --button-bg-color: #0f0;
-    --button-bg-color-focused: #0ff;
-    --button-border: 3px solid #f00;
-    --button-font-color: #f00;
-    --error-color: #fff;
-    --section-bg-color: #ff0;
-    --canvas-axis-color: #f00;
-    --canvas-shapes-color: #0000ff60;
-    --canvas-point-color: #ff00ec;
-    --bg-image: none;
-    --bg-image-size: none;
+    .ugly-theme {
+        --body-font: 400 14px 'Ubuntu', 'Roboto', sans-serif;
+        --body-font-color: #f00;
+        --body-bg-color: #00f;
+        --header-color: #aaa;
+        --table-inside-border-color: #0f0;
+        --odd-row-bg-color: #00f;
+        --input-bg-color: #0f0;
+        --input-text-color: #00f;
+        --input-border-color: #0ff;
+        --input-border-color-focused: #6a77e8;
+        --button-bg-color: #0f0;
+        --button-bg-color-focused: #0ff;
+        --button-border: 3px solid #f00;
+        --button-font-color: #f00;
+        --error-color: #fff;
+        --section-bg-color: #ff0;
+        --canvas-axis-color: #f00;
+        --canvas-shapes-color: #0000ff60;
+        --canvas-point-color: #ff00ec;
+        --bg-image: none;
+        --bg-image-size: none;
+    }
 }
 
 body {
-    font: 400 14px 'Roboto', sans-serif;
+    font: var(--body-font);
     color: var(--body-font-color);
     background-color: var(--body-bg-color);
     background-image: var(--bg-image);
     background-size: var(--bg-image-size);
     background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 #container {
@@ -95,13 +102,13 @@ header {
     border: 0 solid var(--header-color);
     border-bottom-width: 2px;
     margin-bottom: 5px;
-}
 
-header p {
-    font: 500 16px 'Fira Code', monospace;
-    color: var(--header-color);
-    text-align: right;
-    margin: 0;
+    & p {
+        font: 500 18px 'Ubuntu Mono', 'Fira Code', monospace;
+        color: var(--header-color);
+        text-align: right;
+        margin: 0;
+    }
 }
 
 table {
@@ -110,22 +117,24 @@ table {
     border-collapse: collapse;
 }
 
-thead th:nth-child(1) {
-    width: 25%;
-}
+thead {
+    & th:nth-child(1) {
+        width: 25%;
+    }
 
-thead th:nth-child(2),
-thead th:nth-child(3),
-thead th:nth-child(4) {
-    width: 5%;
-}
+    & th:nth-child(2),
+    & th:nth-child(3),
+    & th:nth-child(4) {
+        width: 5%;
+    }
 
-thead th:nth-child(5) {
-    width: 20%;
-}
+    & th:nth-child(5) {
+        width: 20%;
+    }
 
-thead th:nth-child(6) {
-    width: 40%;
+    & th:nth-child(6) {
+        width: 40%;
+    }
 }
 
 tbody tr:nth-child(odd) {
@@ -253,6 +262,7 @@ input[type="checkbox"] + label {
 }
 
 input[type="submit"], button {
+    font: var(--body-font);
     padding: 4%;
     border-radius: 5px;
     border: var(--button-border);
@@ -292,10 +302,10 @@ input[type="submit"]:hover, button:hover {
 
 /* For demonstration */
 
-input[type="checkbox"] + label {
-    font: 500 14px 'Fira Code', monospace;
-}
+/*input[type="checkbox"] + label {*/
+/*    font: 500 14px 'Fira Code', monospace;*/
+/*}*/
 
-th.r ~ th {
-    font: 500 14px 'Fira Code', monospace;
-}
+/*th.r ~ th {*/
+/*    font: 500 14px 'Fira Code', monospace;*/
+/*}*/

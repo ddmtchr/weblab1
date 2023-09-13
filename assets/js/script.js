@@ -7,61 +7,87 @@ const clearButton = document.querySelector('#clear-button')
 const themeToggleButton = document.querySelector('#theme-toggle-button')
 const uglyThemeButton = document.querySelector('#ugly-theme-button')
 
-render(false)
+const drawer = new Drawer(false)
+drawer.drawGraph(false)
+fillTable(JSON.parse(getFromLocalStorage('previousResults')))
+
 mainForm.addEventListener('submit', async function (event) {
     event.preventDefault()
 
-    let y = yField.value
-    let checkboxGroup = document.querySelectorAll('.checkbox-group .chb:checked')
+    const y = yField.value
+    const checkboxGroup = document.querySelectorAll('.checkbox-group .chb:checked')
+
     if (isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5 && checkboxGroup.length === 1) {
-        const requestData = new FormData(this)
-        const response = await fetch('pages/check-hit.php?' + new URLSearchParams(requestData))
+        try {
+            const requestData = new FormData(this)
+            const response = await fetch('pages/check-hit.php?' + new URLSearchParams(requestData))
 
-        if (!response.ok) {
-            console.log(`https://http.cat/${response.status}`)
-            window.location.href = `https://http.cat/${response.status}`
-        } else {
-            const responseDataJSON = await response.text() // JSON
-            const responseObject = JSON.parse(responseDataJSON)
-            // console.log(responseObject)
+            if (response.ok) {
+                const responseDataJSON = await response.text() // JSON
+                const responseObject = JSON.parse(responseDataJSON) // Object array
 
-            const previousResultsJSON = getFromLocalStorage('previousResults')
-            const previousResults = JSON.parse(previousResultsJSON)
-            previousResults.push(responseObject)
+                const point = {
+                    x: responseObject['x'],
+                    y: responseObject['y'],
+                    r: responseObject['r'],
+                }
 
-            localStorage.setItem('previousResults', JSON.stringify(previousResults))
+                const previousResultsJSON = getFromLocalStorage('previousResults') // JSON
+                const previousResults = JSON.parse(previousResultsJSON) // Object array
+                previousResults.push(responseObject)
 
-            render(true)
-            yError.textContent = ''
-            rError.textContent = ''
+                localStorage.setItem('previousResults', JSON.stringify(previousResults))
+
+                drawer.drawPoint(point, getComputedStyle(document.body).getPropertyValue('--canvas-point-color'))
+                fillTable(previousResults)
+
+                yError.textContent = ''
+                rError.textContent = ''
+            } else {
+                console.log(`https://http.cat/${response.status}`)
+                window.location.href = `https://http.cat/${response.status}`
+            }
+        } catch (e) {
+            console.log(e.description)
         }
     } else if (!(isNumeric(y) && parseFloat(y) >= -5 && parseFloat(y) <= 5)) {
         yError.textContent = 'Y must be a float between -5 and 5'
     } else if (checkboxGroup.length !== 1) {
         rError.textContent = 'Exactly 1 checkbox should be selected'
-
     }
 })
 
 clearButton.addEventListener('click', function (event) {
     event.preventDefault()
+    drawer.lastPointIsDrawn = false
+    drawer.drawGraph(true)
     localStorage.clear()
-    render(false)
+    fillTable([])
 })
 
 themeToggleButton.addEventListener('click', function () {
     document.body.classList.toggle('dark-theme')
+    document.body.classList.remove('ugly-theme')
+
     if (document.body.classList.contains('dark-theme')) {
         themeToggleButton.textContent = "To the light side"
     } else {
         themeToggleButton.textContent = "To the dark side"
     }
-    render(true)
+
+    drawer.drawGraph(true)
+    if (drawer.lastPointIsDrawn) {
+        drawer.drawPoint(drawer.lastPoint, getComputedStyle(document.body).getPropertyValue('--canvas-point-color'))
+    }
 })
 
 uglyThemeButton.addEventListener('click', function () {
     document.body.classList.toggle('ugly-theme')
-    render(true)
+
+    drawer.drawGraph(true)
+    if (drawer.lastPointIsDrawn) {
+        drawer.drawPoint(drawer.lastPoint, getComputedStyle(document.body).getPropertyValue('--canvas-point-color'))
+    }
 })
 
 yField.addEventListener('input', function () {
@@ -77,12 +103,8 @@ yField.addEventListener('input', function () {
     }
 })
 
-function render(drawLastPoint) {
-    const resultsJSON = getFromLocalStorage('previousResults')
-    const resultsObjects = JSON.parse(resultsJSON)
-
+function fillTable(resultsObjects) {
     tableBody.innerHTML = ''
-
     for (const result of resultsObjects) {
         const newRow = tableBody.insertRow()
         const resultCell = newRow.insertCell(0)
@@ -97,11 +119,7 @@ function render(drawLastPoint) {
         rCell.innerHTML = +result['r']
         execTimeCell.innerHTML = result['exec_time']
         currentTimeCell.innerHTML = result['current_time']
-        if (drawLastPoint) redrawPoint(result['x'] * 200 / result['r'], result['y'] * 200 / result['r'],
-            getComputedStyle(document.body).getPropertyValue('--canvas-point-color'))
     }
-    if (!drawLastPoint) redrawGraph()
-
 }
 
 function isNumeric(str) {
@@ -112,5 +130,3 @@ function isNumeric(str) {
 function getFromLocalStorage(key) {
     return localStorage.getItem(key) === null ? JSON.stringify([]) : localStorage.getItem(key)
 }
-
-
